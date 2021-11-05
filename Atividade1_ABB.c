@@ -63,12 +63,13 @@ int main(){
         scanf("%d", &valor_desejado);
         verifica = VerificaExistencia(a, valor_desejado);
         if(verifica ==1){
-            printf("O numero existe");
+            printf("\nO numero existe");
         }
         else{
-            printf("O numero não existe");
+            printf("\nO numero não existe");
         }
-    case 9:
+        break;
+    case 8:
         break;
     default:
         printf ("Valor invalido!\n");
@@ -165,10 +166,10 @@ int VerificaExistencia(arvore *a, int valor_desejado){
 
         VerificaExistencia(a->dir,valor_desejado);
     }
-        if(valor_desejado<a->info){
+        else if(valor_desejado<a->info){
             VerificaExistencia(a->esq,valor_desejado);
         }
-        if(valor_desejado == a->info){
+        else if(valor_desejado == a->info){
             return 1;
         }
     }
