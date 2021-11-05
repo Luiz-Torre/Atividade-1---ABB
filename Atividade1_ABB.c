@@ -21,7 +21,7 @@ int main(){
     int op;
     int valor_desejado, verifica, altura,aux_balanceada, aux_cheia, num_no;
     char nome_arquivo[50];
-    while (op!= 9)
+    while (op!= 8)
     {    
     
     printf("\n\nO que você deseja fazer? Digite: \n1- Para ler a arvore de um arquivo\n2-Para imprimir a arvore.\n3- Verificar se um elemento existe na arvore\n4-Imprimir o Nivel de Um no\n5-Imprimir as folhas menores que um valor\n6-Inserir um no X na arvore\n7-Remover um no X da arvore\n8-Sair\n");
@@ -61,7 +61,13 @@ int main(){
     case 3:
         puts("Informe o elemento que deseja saber existencia");
         scanf("%d", &valor_desejado);
-        VerificaExistencia(a, valor_desejado);
+        verifica = VerificaExistencia(a, valor_desejado);
+        if(verifica ==1){
+            printf("O numero existe");
+        }
+        else{
+            printf("O numero não existe");
+        }
     case 9:
         break;
     default:
@@ -153,18 +159,21 @@ int CalcAltura (arvore *a){
 }
 
 int VerificaExistencia(arvore *a, int valor_desejado){
-    if(valor_desejado>a->info){
-        printf("%d", valor_desejado);
+    if (a != NULL){
+
+        if(valor_desejado>a->info){
 
         VerificaExistencia(a->dir,valor_desejado);
     }
-    // if(valor_desejado<a->info){
-    //     VerificaExistencia(a->esq,valor_desejado);
-    // }
-    // if(valor_desejado == a->info){
-    //     return 1;
-    // }
-    // else{
-    //     return 0;
-    // }
+        if(valor_desejado<a->info){
+            VerificaExistencia(a->esq,valor_desejado);
+        }
+        if(valor_desejado == a->info){
+            return 1;
+        }
+    }
+    else{
+
+       return 0;
+    }
 }
