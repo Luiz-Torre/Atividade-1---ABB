@@ -16,6 +16,7 @@ int CalcAltura (arvore *a);
 int VerificaExistencia(arvore *a, int valor_desejado);
 void NoFolhaMenor(arvore *a, int valor_desejado);
 void NivelNo(arvore *a,int aux,int num_no);
+void LimparArvore(arvore* a);
 int main(){
     FILE * arq;
     int op;
@@ -82,6 +83,7 @@ int main(){
         NoFolhaMenor(a,valor_desejado);
         break;
     case 8:
+        LimparArvore(a);
         break;
     default:
         printf ("Valor invalido!\n");
@@ -222,4 +224,12 @@ void NoFolhaMenor(arvore *a, int valor_desejado){
 
         }
     }
+}
+
+void LimparArvore(arvore *a){
+    if(a!=NULL){
+        LimparArvore(a->esq);
+        LimparArvore(a->dir);
+        free(a);
+     }
 }
