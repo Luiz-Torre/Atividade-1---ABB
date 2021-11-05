@@ -15,6 +15,7 @@ void ImprimirLargura(arvore *a, int aux, int nivel);
 int CalcAltura (arvore *a);
 int VerificaExistencia(arvore *a, int valor_desejado);
 void NoFolhaMenor(arvore *a, int valor_desejado);
+void NivelNo(arvore *a,int aux,int num_no);
 int main(){
     FILE * arq;
     int op;
@@ -67,6 +68,13 @@ int main(){
         else{
             printf("\nO numero não existe");
         }
+        break;
+    case 4:
+        puts("Informe o valor do no desejado");
+        scanf("%d", &num_no);
+        NivelNo(a,0,num_no);
+        printf("\n"); 
+
         break;
     case 5:
         puts("Informe o elemento que deseja saber existencia");
@@ -181,6 +189,20 @@ int VerificaExistencia(arvore *a, int valor_desejado){
 
        return 0;
     }
+}
+
+void NivelNo(arvore *a, int aux, int num_no){
+     if(a!=NULL){
+        if(num_no> a->info){
+           NivelNo(a->dir, aux+1, num_no);
+        }
+        else if (num_no< a->info){
+           NivelNo(a->esq, aux+1, num_no);
+        }
+        else if(num_no== a->info){
+            printf("O %d no se encontra no %d° nivel",num_no, aux);
+        }
+}
 }
 
 void NoFolhaMenor(arvore *a, int valor_desejado){
