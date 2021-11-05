@@ -14,8 +14,7 @@ void ImprimirPosOrdem(arvore *a);
 void ImprimirLargura(arvore *a, int aux, int nivel);
 int CalcAltura (arvore *a);
 int VerificaExistencia(arvore *a, int valor_desejado);
-
-
+void NoFolhaMenor(arvore *a, int valor_desejado);
 int main(){
     FILE * arq;
     int op;
@@ -68,6 +67,11 @@ int main(){
         else{
             printf("\nO numero não existe");
         }
+        break;
+    case 5:
+        puts("Informe o elemento que deseja saber existencia");
+        scanf("%d", &valor_desejado);
+        NoFolhaMenor(a,valor_desejado);
         break;
     case 8:
         break;
@@ -176,5 +180,24 @@ int VerificaExistencia(arvore *a, int valor_desejado){
     else{
 
        return 0;
+    }
+}
+
+void NoFolhaMenor(arvore *a, int valor_desejado){
+    int folha;
+    if(a != NULL){
+        if(a->info>valor_desejado){
+            NoFolhaMenor(a->esq,valor_desejado);
+
+        }
+        else{
+
+            if (a->esq == NULL && a->dir == NULL){
+                printf("%d ", a->info);
+            }
+            NoFolhaMenor(a->esq,valor_desejado);
+            NoFolhaMenor(a->dir,valor_desejado);
+
+        }
     }
 }
