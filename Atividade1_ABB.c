@@ -17,15 +17,18 @@ int VerificaExistencia(arvore *a, int valor_desejado);
 void NoFolhaMenor(arvore *a, int valor_desejado);
 void NivelNo(arvore *a,int aux,int num_no);
 void LimparArvore(arvore* a);
+void *InserirNo(arvore *a,int x);
+arvore *ExcluirNo(arvore *a,int x);
+
 int main(){
     FILE * arq;
     int op;
-    int valor_desejado, verifica, altura,aux_balanceada, aux_cheia, num_no;
+    int valor_desejado, verifica, altura,aux_balanceada, aux_cheia, num_no, novo_no,apaga_no;
     char nome_arquivo[50];
     while (op!= 8)
     {    
     
-    printf("\n\nO que você deseja fazer? Digite: \n1- Para ler a arvore de um arquivo\n2-Para imprimir a arvore.\n3- Verificar se um elemento existe na arvore\n4-Imprimir o Nivel de Um no\n5-Imprimir as folhas menores que um valor\n6-Inserir um no X na arvore\n7-Remover um no X da arvore\n8-Sair\n");
+    printf("\n\nO que voce deseja fazer? Digite: \n1- Para ler a arvore de um arquivo\n2- Para imprimir a arvore.\n3- Verificar se um elemento existe na arvore\n4- Imprimir o Nivel de Um no\n5- Imprimir as folhas menores que um valor\n6- Inserir um no X na arvore\n7- Remover um no X da arvore\n8- Sair\n");
     scanf("%d",&op);
 
     switch (op)
@@ -45,14 +48,14 @@ int main(){
         break;
     
     case 2:
-        printf("\nImpressão Pre ordem: \n");
+        printf("\nImpressao Pre ordem: \n");
         ImprimirPreOrdem(a);
-        printf("\n\nImpressão em ordem: \n");
+        printf("\n\nImpressao em ordem: \n");
         ImprimirOrdem(a);
-        printf("\n\nImpressão pós ordem: \n");
+        printf("\n\nImpressao pós ordem: \n");
         ImprimirPosOrdem(a);
         altura = CalcAltura(a);
-        printf("\n\nImpressão em largura: \n");
+        printf("\n\nImpressao em largura: \n");
         for (int nivel = 0; nivel < altura; nivel++){
             printf("Nivel %d : ", nivel);
             ImprimirLargura(a, 0, nivel);
@@ -67,7 +70,7 @@ int main(){
             printf("\nO numero existe");
         }
         else{
-            printf("\nO numero não existe");
+            printf("\nO numero nao existe");
         }
         break;
     case 4:
@@ -81,6 +84,16 @@ int main(){
         puts("Informe o elemento que deseja saber existencia");
         scanf("%d", &valor_desejado);
         NoFolhaMenor(a,valor_desejado);
+        break;
+    case 6:
+        printf("Informe o no a ser inserido na arvore");
+        scanf("%d",&novo_no);
+        InserirNo(a,novo_no);
+        break;
+    case 7:
+        printf("Informe o no a ser removido na arvore");
+        scanf("%d",&apaga_no);
+            ExcluirNo(a,apaga_no);
         break;
     case 8:
         LimparArvore(a);
@@ -232,4 +245,54 @@ void LimparArvore(arvore *a){
         LimparArvore(a->dir);
         free(a);
      }
+}
+void *InserirNo(arvore *a,int x){
+    if(a==NULL){
+        a = (arvore*) malloc(sizeof (arvore));
+        a->info = x;
+        a->dir= NULL;
+        a->esq= NULL;
+    }
+    else if (x <= a->info){
+        a->esq = InserirNo(a->esq,x);
+    }
+    else{
+        a->dir = InserirNo(a->dir,x);
+    }
+    return a;
+}
+arvore *ExcluirNo(arvore *a,int x){
+    if(a !=NULL){
+        if(a->info==x){
+            if(a->esq==NULL && a->dir==NULL){
+                free(a);
+                return NULL;
+            }
+            else if(a->esq==NULL){
+                arvore *aux=a->dir;
+                free(a);
+                return aux;
+            }
+            else if(a->dir==NULL){
+                arvore *aux=a->esq;
+                free(a);
+                return aux;
+            }
+            else{
+                arvore *aux =a->esq;
+                while(aux->dir!=NULL){
+                    aux = aux->dir;
+                }
+                a->info=aux->info;
+                a->esq = ExcluirNo(a->esq,aux->info);
+            }
+        }
+        else if(x<a->info){
+            a->esq = ExcluirNo(a->esq,x);
+        }
+        else {
+            a->dir = ExcluirNo(a->dir,x);
+        }
+    }
+    return a;
 }
