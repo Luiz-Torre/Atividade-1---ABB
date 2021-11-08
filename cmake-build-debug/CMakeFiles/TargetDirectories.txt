@@ -1,3 +1,0 @@
-C:/Atividade-1---ABB/cmake-build-debug/CMakeFiles/Atividade_1___ABB.dir
-C:/Atividade-1---ABB/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Atividade-1---ABB/cmake-build-debug/CMakeFiles/rebuild_cache.dir
